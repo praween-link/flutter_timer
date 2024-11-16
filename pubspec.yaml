@@ -1,0 +1,20 @@
+name: timer_flutter
+maintainer: Praween Kumar (@pkumar.link)
+description: "A DateTime-based Flutter timer with progress, formatted time, and status tracking listeners."
+version: 0.0.1-beta
+homepage: https://github.com/praween-link/flutter_timer
+
+environment:
+  sdk: '>=3.4.0-282.3.beta <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:

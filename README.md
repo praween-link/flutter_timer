@@ -1,5 +1,5 @@
 
-# flutter_timer
+# timer_flutter
 
 A versatile and developer-friendly Flutter package for creating and managing timers based on current DateTime. A timer with multiple listeners, synchronized with the current time. It supports millisecond updates, progress tracking (0 to 1), formatted time output, and timer status monitoring.
 
@@ -17,7 +17,7 @@ A versatile and developer-friendly Flutter package for creating and managing tim
 
 ## Timer controller
 
-`FTimerController controller = FTimerController();`
+`TimerFController controller = TimerFController();`
 
 * `controller.restart()`
 
@@ -31,11 +31,11 @@ A versatile and developer-friendly Flutter package for creating and managing tim
 ## Examples
 
 ```dart
-late FTimerController _fTimerController;
+late TimerFController _timerFController;
 ```
 
 ```dart
-_fTimerController = FTimerController(
+_timerFController = TimerFController(
     startTime: DateTime.now().add(
         const Duration(seconds: 18)), // --timer will be start after `18 sec`
     duration: const Duration(minutes: 8),
@@ -58,12 +58,12 @@ _fTimerController = FTimerController(
 ```
 
 ```dart
-_fTimerController.dispose();
+_timerFController.dispose();
 ```
 
 ```dart
 StreamBuilder<String>(
-    stream: _fTimerController.controller.stream,
+    stream: _timerFController.controller.stream,
     builder: (context, snapshot) {
         if (snapshot.hasData) {
         return Text(snapshot.data ?? '',
@@ -78,7 +78,7 @@ StreamBuilder<String>(
 
 
 ## Usege
-Simple demo of the flutter_timer package with full code
+Simple demo of the timer_flutter package with full code
 
 ```
 import 'dart:developer';
@@ -95,11 +95,11 @@ class TimerDemo extends StatefulWidget {
 }
 
 class _TimerDemoState extends State<TimerDemo> {
-  late FTimerController _fTimerController;
+  late TimerFController _timerFController;
   @override
   void initState() {
     super.initState();
-    _fTimerController = FTimerController(
+    _timerFController = TimerFController(
       startTime: DateTime.now().add(
           const Duration(seconds: 18)), // --timer will be start after `18 sec`
       duration: const Duration(minutes: 8),
@@ -124,7 +124,7 @@ class _TimerDemoState extends State<TimerDemo> {
   @override
   void dispose() {
     super.dispose();
-    _fTimerController.dispose();
+    _timerFController.dispose();
   }
 
   @override
@@ -136,7 +136,7 @@ class _TimerDemoState extends State<TimerDemo> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             StreamBuilder<String>(
-                stream: _fTimerController.controller.stream,
+                stream: _timerFController.controller.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Text(snapshot.data ?? '',
@@ -153,13 +153,13 @@ class _TimerDemoState extends State<TimerDemo> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    _fTimerController.restart();
+                    _timerFController.restart();
                   },
                   child: const Text("reset"),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    _fTimerController.clear();
+                    _timerFController.clear();
                   },
                   child: const Text("clear"),
                 ),
