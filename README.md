@@ -1,7 +1,7 @@
 
 # timer_flutter
 
-A versatile and developer-friendly Flutter package for creating and managing timers based on current DateTime. A timer with multiple listeners, synchronized with the current time. It supports millisecond updates, progress tracking (0 to 1), formatted time output, and timer status monitoring.
+A versatile and developer-friendly Flutter package for creating and managing timers based on current DateTime. A timer with multiple listeners, synchronized with the current time. It supports millisecond updates, progress tracking (0 to 1), formatted time output, and timer status monitoring. As well time ago and time left.
 
 
 ## Timer Listeners
@@ -15,7 +15,7 @@ A versatile and developer-friendly Flutter package for creating and managing tim
 * `progress0to1Listener`: timer progress `0 to 1` listener
 
 
-## Timer controller
+## Timer Controller
 
 `TimerFController controller = TimerFController();`
 
@@ -27,6 +27,29 @@ A versatile and developer-friendly Flutter package for creating and managing tim
 
 * `controller.controller.stream`: listen formatted time using [StreamBuilder](https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html)
 
+## Get Time Ago/Left
+
+### Time Ago
+```
+final DateTime pastDateTime = DateTime.parse('2024-08-27 23:31:15.000');
+String timeagoStr = TimeF.timeAgo(pastDateTime, formate: TimeAgoFormate(secound: "## sec'# ago", week: "## week'# ago"), 
+  listenerDateTimeF: (dtf) {
+    log(" Ago DateTimeF Listener: ${dtf.toString()}"); // Ago DateTimeF Listener: DateTimeF(year: 0, month: 2, week: 3, day: 3, hour: 1, minute: 1, secound: 10)
+  });
+
+log(timeagoStr); // 2 months ago
+```
+
+### Time Left
+```
+final DateTime futureDateTime = DateTime.parse('2024-11-26 23:31:15.000');
+String timeExpireStr = TimeF.timeLeft(futureDateTime, formate: TimeAgoFormate(hour: "Offer expire in ## hour'#", day: "Offer expire in ## day'#"), 
+  listenerDateTimeF: (dtf) {
+    log("Left DateTimeF Listener: ${dtf.toString()}"); // Left DateTimeF Listener: DateTimeF(year: 0, month: 0, week: 0, day: 6, hour: 22, minute: 58, secound: 49)
+  });
+
+log(timeExpireStr); // Offer expire in 6 days
+```
 
 ## Examples
 
