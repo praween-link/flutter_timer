@@ -1,3 +1,5 @@
+import 'package:timer_flutter/src/time_flutter_ago_left/months_weeks_extension.dart';
+
 import 'time_flutter.dart';
 
 class TimeFAgo {
@@ -49,19 +51,8 @@ class TimeAgoFormate {
   });
 }
 
-extension ReplashingLeftAgo on String {
-  String leftAlgoFm(int value) {
-    String fmv = replaceFirst('##', value.toString());
-    if (value > 1) {
-      fmv = fmv.replaceFirst("'#", "s");
-    } else {
-      fmv = fmv.replaceFirst("'#", "");
-    }
-    return fmv;
-  }
-}
 
-extension GetFormateStr on TimeAgoFormate? {
+extension GetFormateTimeAgoStr on TimeAgoFormate? {
   String get toSecoundFormateString {
     String fm = "## secound'# ago";
     if (this != null) {
