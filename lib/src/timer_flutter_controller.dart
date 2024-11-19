@@ -26,7 +26,7 @@ class TimerFController {
   /// Timer progress `0 to 1` listener
   void Function(double)? progress0to1Listener;
 
-  /// Timer listener value in millisecounds
+  /// Timer listener value in milliseconds
   void Function(int)? millisecondsListener;
 
   /// Time listener of value as string with formate

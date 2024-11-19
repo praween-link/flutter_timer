@@ -10,3 +10,6 @@
 
 * `time-ago and time-left` issue fixed.
 
+## 0.1.2-beta
+
+* issue fixed.

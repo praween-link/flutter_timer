@@ -15,7 +15,7 @@ class TimeFAgo {
     }
 
     if (difference.inSeconds < 60) {
-      return formate.toSecoundFormateString.leftAlgoFm(difference.inSeconds);
+      return formate.tosecondFormateString.leftAlgoFm(difference.inSeconds);
     } else if (difference.inMinutes < 60) {
       return formate.toMinuteFormateString.leftAlgoFm(difference.inMinutes);
     } else if (difference.inHours < 24) {
@@ -33,7 +33,7 @@ class TimeFAgo {
 }
 
 class TimeAgoFormate {
-  final String? secound;
+  final String? second;
   final String? minute;
   final String? hour;
   final String? day;
@@ -41,7 +41,7 @@ class TimeAgoFormate {
   final String? month;
   final String? year;
   TimeAgoFormate({
-    this.secound,
+    this.second,
     this.minute,
     this.hour,
     this.day,
@@ -53,11 +53,11 @@ class TimeAgoFormate {
 
 
 extension GetFormateTimeAgoStr on TimeAgoFormate? {
-  String get toSecoundFormateString {
-    String fm = "## secound'# ago";
+  String get tosecondFormateString {
+    String fm = "## second'# ago";
     if (this != null) {
-      if (this?.secound != null) {
-        fm = this?.secound ?? fm;
+      if (this?.second != null) {
+        fm = this?.second ?? fm;
       }
     }
     return fm;
@@ -153,29 +153,29 @@ DateTimeF getTimeAgoConvertedDateTimeF(DateTime dateTime) {
 
   //#// TIME //#//
 
-  /// --for secound
-  int secounds = 0;
+  /// --for second
+  int seconds = 0;
   if (difference.inDays > 0) {
     var dateTimeInTimeOnly = dateTime.add(Duration(days: difference.inDays));
     final Duration tempDuration = DateTime.now().difference(dateTimeInTimeOnly);
-    secounds = tempDuration.inSeconds;
+    seconds = tempDuration.inSeconds;
   } else {
-    secounds = difference.inSeconds;
+    seconds = difference.inSeconds;
   }
 
   /// --for hour
   int hours = 0;
-  if (secounds >= 3600) {
-    hours = (secounds ~/ 3600);
-    secounds = secounds - (hours * 3600);
+  if (seconds >= 3600) {
+    hours = (seconds ~/ 3600);
+    seconds = seconds - (hours * 3600);
   }
 
   /// --for hour
   int minutes = 0;
-  if (secounds >= 60) {
-    minutes = secounds ~/ 60;
-    secounds = secounds - (minutes * 60);
+  if (seconds >= 60) {
+    minutes = seconds ~/ 60;
+    seconds = seconds - (minutes * 60);
   }
 
-  return DateTimeF(years, months, weeks, days, hours, minutes, secounds);
+  return DateTimeF(years, months, weeks, days, hours, minutes, seconds);
 }
