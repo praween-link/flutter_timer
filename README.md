@@ -10,7 +10,7 @@ A versatile and developer-friendly Flutter package for creating and managing tim
 
 * `timeListener`: formatted time listener `HH:MM:SS:ms`
 
-* `millisecondsListener`: timer listener value in millisecounds
+* `millisecondsListener`: timer listener value in milliseconds
 
 * `progress0to1Listener`: timer progress `0 to 1` listener
 
@@ -32,9 +32,9 @@ A versatile and developer-friendly Flutter package for creating and managing tim
 ### Time Ago
 ```
 final DateTime pastDateTime = DateTime.parse('2024-08-27 23:31:15.000');
-String timeagoStr = TimeF.timeAgo(pastDateTime, formate: TimeAgoFormate(secound: "## sec'# ago", week: "## week'# ago"), 
+String timeagoStr = TimeF.timeAgo(pastDateTime, formate: TimeAgoFormate(second: "## sec'# ago", week: "## week'# ago"), 
   listenerDateTimeF: (dtf) {
-    log(" Ago DateTimeF Listener: ${dtf.toString()}"); // Ago DateTimeF Listener: DateTimeF(year: 0, month: 2, week: 3, day: 3, hour: 1, minute: 1, secound: 10)
+    log(" Ago DateTimeF Listener: ${dtf.toString()}"); // Ago DateTimeF Listener: DateTimeF(year: 0, month: 2, week: 3, day: 3, hour: 1, minute: 1, second: 10)
   });
 
 log(timeagoStr); // 2 months ago
@@ -43,12 +43,21 @@ log(timeagoStr); // 2 months ago
 ### Time Left
 ```
 final DateTime futureDateTime = DateTime.parse('2024-11-26 23:31:15.000');
-String timeExpireStr = TimeF.timeLeft(futureDateTime, formate: TimeAgoFormate(hour: "Offer expire in ## hour'#", day: "Offer expire in ## day'#"), 
+String timeExpireStr = TimeF.timeLeft(futureDateTime, formate: TimeLeftFormate(hour: "Offer expire in ## hour'#", day: "Offer expire in ## day'#"), 
   listenerDateTimeF: (dtf) {
-    log("Left DateTimeF Listener: ${dtf.toString()}"); // Left DateTimeF Listener: DateTimeF(year: 0, month: 0, week: 0, day: 6, hour: 22, minute: 58, secound: 49)
+    log("Left DateTimeF Listener: ${dtf.toString()}"); // Left DateTimeF Listener: DateTimeF(year: 0, month: 0, week: 0, day: 6, hour: 22, minute: 58, second: 49)
   });
 
 log(timeExpireStr); // Offer expire in 6 days
+```
+
+### Formate
+```
+hour: "Offer expire in ## hour'#", // Result: Offer expire in 8 hours
+```
+
+```
+month: "updated ## month'# ago", // Result: updated last 1 month ago
 ```
 
 ## Examples
