@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'extensions/imports.dart';
+
 enum AppTimerStatus { notStartedYet, started, ended, reset, clear }
 
 class TimerFController {
@@ -18,7 +20,7 @@ class TimerFController {
   /// each continus listener's `progress0to1Listener`, `millisecondsListener` and `timeListener`.
   Duration? listeningDelay;
 
-  bool reverce;
+  bool isCountdown;
 
   /// Timer status listener
   void Function(AppTimerStatus)? statusListener;
@@ -37,7 +39,7 @@ class TimerFController {
     this.duration,
     this.timeFormate = "HH:MM:SS:ms",
     this.listeningDelay,
-    this.reverce = false,
+    this.isCountdown = true,
     this.statusListener,
     this.progress0to1Listener,
     this.millisecondsListener,
@@ -60,7 +62,7 @@ class TimerFController {
   restart() {
     _isTimerStarted = true;
     _isTimerEnd = false;
-    startTime = DateTime.now();
+    startTime = DateTime.now().add(listeningDelay ?? defaultDelay);
     _startAddingNumbers();
 
     /// listener `statusListener`
@@ -72,8 +74,11 @@ class TimerFController {
   // --this function reset the timer
   clear() {
     _isTimerEnd = true;
-    Duration delay = listeningDelay ?? const Duration(milliseconds: 100);
-    _updateFormatedTimeString(0, delay);
+    Duration delay = listeningDelay ?? defaultDelay;
+    _updateFormatedTimeString(0, delay, isCountdown);
+    if (progress0to1Listener != null) {
+      progress0to1Listener!(0);
+    }
 
     /// listener `statusListener`
     if (statusListener != null) {
@@ -88,10 +93,11 @@ class TimerFController {
   }
 
   // ------------------------------------
+  Duration defaultDelay = const Duration(milliseconds: 50);
 
   void _startAddingNumbers() async {
-    Duration delay = listeningDelay ?? const Duration(milliseconds: 100);
-    startTime ??= DateTime.now();
+    Duration delay = listeningDelay ?? defaultDelay;
+    startTime ??= DateTime.now().add(delay);
 
     /// listener `statusListener`
     if (statusListener != null) {
@@ -102,7 +108,7 @@ class TimerFController {
         timer.cancel();
       }
       final DateTime current = DateTime.now();
-      DateTime startedTime = startTime ?? DateTime.now();
+      DateTime startedTime = (startTime ?? DateTime.now()).add(delay);
       final DateTime end = startedTime.add(duration ?? const Duration(days: 1));
       final int maxMilisec = end.difference(startedTime).inMilliseconds;
       final int milisec = end.difference(current).inMilliseconds;
@@ -113,20 +119,8 @@ class TimerFController {
       }
 
       /// listener `progress0to1Listener`
-      if (progress0to1Listener != null && (_isTimerStarted && !_isTimerEnd)) {
-        double per =
-            ((milisec * 100) / end.difference(startedTime).inMilliseconds) /
-                100;
-
-        if (per <= 100 && per >= 0) {
-          /// --added reverce timer progress condition
-          if (reverce) {
-            progress0to1Listener!(1 - per);
-          } else {
-            progress0to1Listener!(per);
-          }
-        }
-      }
+      _progress0to1ListenerUpdate(
+          end, startedTime, milisec, (_isTimerStarted && !_isTimerEnd));
 
       if (_timerStart(current: current, start: startedTime)) {
         if (_controller.isClosed) {
@@ -134,24 +128,41 @@ class TimerFController {
         }
 
         /// --added reverce timer condition
-        if (reverce) {
-          _updateFormatedTimeString(maxMilisec - milisec, delay);
+        if (isCountdown) {
+          _updateFormatedTimeString(milisec, delay, isCountdown);
         } else {
-          _updateFormatedTimeString(milisec, delay);
+          _updateFormatedTimeString(maxMilisec - milisec, delay, isCountdown);
         }
       }
       _timerStartChangeStatus(current: current, start: startedTime);
 
       /// --end timer
       if (milisec <= 0) {
-        _updateFormatedTimeString(0, delay);
+        _updateFormatedTimeString(10, delay, isCountdown);
         timer.cancel();
-        _controller.close();
       }
     });
   }
 
-  _updateFormatedTimeString(int milisec, delay) {
+  _progress0to1ListenerUpdate(
+      DateTime end, DateTime startedTime, int milisec, bool runing) {
+    if (progress0to1Listener != null && runing) {
+      double per =
+          ((milisec * 100) / end.difference(startedTime).inMilliseconds) / 100;
+      if (per <= 100 && per >= 0) {
+        /// --added countdown timer progress condition
+        if (isCountdown) {
+          progress0to1Listener!(per);
+        } else {
+          progress0to1Listener!(1 - per);
+        }
+      } else {
+        progress0to1Listener!(isCountdown ? 0 : 1);
+      }
+    }
+  }
+
+  _updateFormatedTimeString(int milisec, delay, bool isCountdown) {
     if (_isTimerStarted && !_isTimerEnd) {
       _controller.sink.add(milisec.tFormate(timeFormate, delay));
 
@@ -160,6 +171,7 @@ class TimerFController {
         timeListener!(milisec.tFormate(timeFormate, delay));
       }
     } else {
+      if (!isCountdown) return;
       _controller.sink.add(0.tFormate(timeFormate, delay));
 
       /// listener `timeListener`
@@ -186,6 +198,12 @@ class TimerFController {
       if (!_isTimerStarted) {
         /// listener `statusListener`
         if (statusListener != null) {
+          if (progress0to1Listener != null) {
+            progress0to1Listener!(isCountdown ? 1 : 0);
+          }
+          _controller.sink.add((isCountdown ? milisec : milisec2)
+              .tFormate(timeFormate, listeningDelay ?? defaultDelay));
+          //
           statusListener!(AppTimerStatus.started);
         }
         _isTimerStarted = true;
@@ -197,31 +215,4 @@ class TimerFController {
     final status = current.difference(start).inMilliseconds;
     return status >= 0;
   }
-}
-
-extension FtutterTimerExtension on int {
-  String tFormate(String fs, Duration delay) {
-    if (this <= 0) return replayall(fs, (0, 0, 0, 0));
-    final xd = Duration(milliseconds: this);
-    final zero = DateTime(DateTime.now().year);
-
-    final dateTime = zero.add(xd);
-
-    var hour = dateTime.hour;
-    var minute = dateTime.minute;
-    var seconds = dateTime.second;
-    var ms = dateTime.millisecond ~/ 10;
-    return replayall(fs, (hour, minute, seconds, ms));
-  }
-
-  String get convertSingleDigitToDouble =>
-      toString().length == 1 ? "0${toString()}" : toString();
-}
-
-String replayall(String time, (int, int, int, int) value) {
-  time = time.replaceFirst("HH", value.$1.convertSingleDigitToDouble);
-  time = time.replaceAll("MM", value.$2.convertSingleDigitToDouble);
-  time = time.replaceAll("SS", value.$3.convertSingleDigitToDouble);
-  time = time.replaceAll("ms", value.$4.convertSingleDigitToDouble);
-  return time;
 }

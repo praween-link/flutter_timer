@@ -1,6 +1,4 @@
-import 'package:timer_flutter/src/time_flutter_ago_left/months_weeks_extension.dart';
-
-import 'time_flutter.dart';
+part of 'imports.dart';
 
 class TimeFAgo {
   TimeFAgo._();
@@ -29,98 +27,6 @@ class TimeFAgo {
     } else {
       return formate.toYearFormateString.leftAlgoFm(dateTimeF.year);
     }
-  }
-}
-
-class TimeAgoFormate {
-  final String? second;
-  final String? minute;
-  final String? hour;
-  final String? day;
-  final String? week;
-  final String? month;
-  final String? year;
-  TimeAgoFormate({
-    this.second,
-    this.minute,
-    this.hour,
-    this.day,
-    this.week,
-    this.month,
-    this.year,
-  });
-}
-
-
-extension GetFormateTimeAgoStr on TimeAgoFormate? {
-  String get tosecondFormateString {
-    String fm = "## second'# ago";
-    if (this != null) {
-      if (this?.second != null) {
-        fm = this?.second ?? fm;
-      }
-    }
-    return fm;
-  }
-
-  String get toMinuteFormateString {
-    String fm = "## minute'# ago";
-    if (this != null) {
-      if (this?.minute != null) {
-        fm = this?.minute ?? fm;
-      }
-    }
-    return fm;
-  }
-
-  String get toHourFormateString {
-    String fm = "## hour'# ago";
-    if (this != null) {
-      if (this?.hour != null) {
-        fm = this?.hour ?? fm;
-      }
-    }
-    return fm;
-  }
-
-  String get toDayFormateString {
-    String fm = "## day'# ago";
-    if (this != null) {
-      if (this?.day != null) {
-        fm = this?.day ?? fm;
-      }
-    }
-    return fm;
-  }
-
-  String get toWeekFormateString {
-    String fm = "## week'# ago";
-    if (this != null) {
-      if (this?.week != null) {
-        fm = this?.week ?? fm;
-      }
-    }
-    return fm;
-  }
-
-  String get toMonthFormateString {
-    String fm = "## month'# ago";
-    if (this != null) {
-      if (this?.month != null) {
-        fm = this?.month ?? fm;
-      }
-    }
-    return fm;
-  }
-
-  String get toYearFormateString {
-    String fm = "## year'# ago";
-    if (this != null) {
-      if (this?.year != null) {
-        fm = this?.year ?? fm;
-      }
-    }
-    return fm;
   }
 }
 
