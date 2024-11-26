@@ -30,7 +30,7 @@ class CircularPaint extends CustomPainter {
     // --Parent background
     Paint paintParent = Paint()
       ..color = (progressShadow?.color ?? Colors.blueGrey)
-          .withValues(alpha: progressShadow?.opacity ?? 0.2)
+          .withAlpha((255.0 * 0.2).round())
       ..maskFilter =
           MaskFilter.blur(BlurStyle.normal, progressShadow?.blur ?? 9.5)
       ..style = PaintingStyle.stroke
@@ -46,7 +46,8 @@ class CircularPaint extends CustomPainter {
     );
     // --Child background
     Paint paint = Paint()
-      ..color = progressBackgroundColor ?? Colors.grey.withValues(alpha: 0.2)
+      ..color = progressBackgroundColor ??
+          Colors.grey.withAlpha((255.0 * 0.2).round())
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
       ..strokeWidth = prgressThickness;

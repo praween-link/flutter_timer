@@ -102,7 +102,8 @@ class _TimerFlutterDemoState extends State<TimerFlutterDemo> {
                 radius: 60,
                 decoraton: CircularTimerDecoraton(
                   fillColor: Colors.transparent,
-                  progressBackgroundColor: Colors.grey.withValues(alpha: 0.2),
+                  progressBackgroundColor:
+                      Colors.grey.withAlpha((255.0 * 0.2).round()),
                   prgressThickness: 12,
                   progressMaskFilter:
                       const MaskFilter.blur(BlurStyle.inner, 11.5),
