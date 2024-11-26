@@ -1,7 +1,7 @@
 name: timer_flutter
 maintainer: Praween Kumar (@pkumar.link)
-description: "A DateTime-based Flutter timer with progress, formatted time, and status tracking listeners. As well time ago and time left."
-version: 0.1.2-beta
+description: "A DateTime-based Flutter timer with progress, formatted time, and circular widget progress/pie. As well time ago and time left."
+version: 0.2.0
 homepage: https://github.com/praween-link/flutter_timer
 
 environment:

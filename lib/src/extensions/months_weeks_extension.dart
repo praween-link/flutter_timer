@@ -27,7 +27,7 @@ extension ShortAndFullMonthNameExtension on int {
       case 12:
         return "December";
       default:
-        return '';
+        return DateTime.now().month.month;
     }
   }
 
@@ -58,7 +58,7 @@ extension ShortAndFullMonthNameExtension on int {
       case 12:
         return "Dec";
       default:
-        return '';
+        return DateTime.now().month.monthShort;
     }
   }
 }
@@ -82,7 +82,7 @@ extension ShortAndFullWeekNameExtension on int {
       case 7:
         return "Saturday";
       default:
-        return '';
+        return DateTime.now().weekday.week;
     }
   }
 
@@ -103,19 +103,7 @@ extension ShortAndFullWeekNameExtension on int {
       case 7:
         return "Sat";
       default:
-        return '';
+        return DateTime.now().weekday.weekShort;
     }
-  }
-}
-
-extension ReplashingLeftAgo on String {
-  String leftAlgoFm(int value) {
-    String fmv = replaceFirst('##', value.toString());
-    if (value > 1) {
-      fmv = fmv.replaceFirst("'#", "s");
-    } else {
-      fmv = fmv.replaceFirst("'#", "");
-    }
-    return fmv;
   }
 }

@@ -6,10 +6,6 @@
 
 * Add a future, easy-to-use for developers `time-ago and time-left`.
 
-## 0.1.1-beta
+## 0.2.0-beta
 
-* `time-ago and time-left` issue fixed.
-
-## 0.1.2-beta
-
-* issue fixed.
+* Add a new future, cirular `progress` and `pie` type timer widget builder.
