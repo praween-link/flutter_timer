@@ -10,6 +10,6 @@
 
 * Add a new future, circular `progress` and `pie` type timer widget builder.
 
-## 0.2.1-beta
+## 0.2.2-beta
 
 * Issue fixed
