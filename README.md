@@ -1,7 +1,7 @@
 
 # timer_flutter
 
-A versatile and developer-friendly Flutter package for creating and managing timers based on current DateTime. A timer with multiple listeners, synchronized with the current time. It supports millisecond updates, progress tracking (0 to 1), formatted time output, and timer status monitoring. As well time ago and time left.
+A versatile and developer-friendly Flutter package for creating and managing timers based on current DateTime. A timer with multiple listeners, synchronized with the current time. It supports millisecond updates, `progress tracking (0 to 1)`, formatted time output, and `timer status` monitoring, circular timer widget `circular progress` and `pie`. As well `time ago` and `time left`.
 
 <img src="https://github.com/praween-link/flutter_timer/blob/v0.2.0/assets/timer_with_progress.gif" width="20%" height="20%"/>  <img src="https://github.com/praween-link/flutter_timer/blob/v0.2.0/assets/timer_with_pie.gif" width="20%" height="20%"/>  <img src="https://github.com/praween-link/flutter_timer/blob/v0.2.0/assets/timer_with_text.gif" width="20%" height="20%"/>
 
