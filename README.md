@@ -109,100 +109,55 @@ StreamBuilder<String>(
 ),
 ```
 
-
-## Usege
-Simple demo of the timer_flutter package with full code
+## Circular `progress` and `pie` type timer widget builder
 
 ```
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
-
-import 'timer.dart';
-
-class TimerDemo extends StatefulWidget {
-  const TimerDemo({super.key});
-
-  @override
-  State<TimerDemo> createState() => _TimerDemoState();
-}
-
-class _TimerDemoState extends State<TimerDemo> {
-  late TimerFController _timerFController;
-  @override
-  void initState() {
-    super.initState();
-    _timerFController = TimerFController(
-      startTime: DateTime.now().add(
-          const Duration(seconds: 18)), // --timer will be start after `18 sec`
-      duration: const Duration(minutes: 8),
-      timeFormate: "MM:SS:ms",
-      listeningDelay: const Duration(milliseconds: 50),
+FlutterCircularProgressTimer(
+  isPieShape: false,
+  timerControllerValues: TimerControllerValues(
+      listeningDelay: const Duration(milliseconds: 100),
+      timeFormate: "MM:SS",
+      isCountdown: true,
+      duration: const Duration(minutes: 5),
       statusListener: (status) {
-        log("timer: --status: $status");
+        log("Timer status: $status");
       },
-      reverce: false,
-      millisecondsListener: (pms) {
-        log("timer: --ms: $pms");
-      },
-      progress0to1Listener: (progress) {
-        log("timer: --progress: $progress");
-      },
-      timeListener: (value) {
-        log("timer: --time: $value");
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _timerFController.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            StreamBuilder<String>(
-                stream: _timerFController.controller.stream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Text(snapshot.data ?? '',
-                        style: const TextStyle(color: Colors.black));
-                  } else {
-                    return const Text("not started",
-                        style: TextStyle(color: Colors.black));
-                  }
-                }),
-            const SizedBox(height: 20),
-            Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 8,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _timerFController.restart();
-                  },
-                  child: const Text("reset"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _timerFController.clear();
-                  },
-                  child: const Text("clear"),
-                ),
-              ],
-            ),
-          ],
+      controller: (controller) {
+        timerFController = controller;
+      }),
+  radius: 60,
+  decoraton: CircularTimerDecoraton(
+    fillColor: Colors.transparent,
+    progressBackgroundColor: Colors.grey.withValues(alpha: 0.2),
+    prgressThickness: 12,
+    progressMaskFilter:
+        const MaskFilter.blur(BlurStyle.inner, 11.5),
+    progressColors: const [Colors.blue],
+    // progressShadow: ProgressShadow(
+    //     color: Colors.red, opacity: 0.5, blur: 9.8, spreadRadius: 18),
+  ),
+  builder: (BuildContext context, value, progress) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          value ?? '',
+          style: const TextStyle(
+            fontSize: 38,
+            color: Colors.black,
+            fontWeight: FontWeight.w300,
+          ),
         ),
-      ),
+        const Text(
+          "minutes",
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ],
     );
-  }
-}
-
+  },
+),
 ```

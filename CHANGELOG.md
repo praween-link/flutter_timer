@@ -8,4 +8,4 @@
 
 ## 0.2.0-beta
 
-* Add a new future, cirular `progress` and `pie` type timer widget builder.
+* Add a new future, circular `progress` and `pie` type timer widget builder.
