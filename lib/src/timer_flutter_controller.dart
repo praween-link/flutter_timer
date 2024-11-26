@@ -93,7 +93,7 @@ class TimerFController {
   }
 
   // ------------------------------------
-  Duration defaultDelay = const Duration(milliseconds: 100);
+  Duration defaultDelay = const Duration(milliseconds: 50);
 
   void _startAddingNumbers() async {
     Duration delay = listeningDelay ?? defaultDelay;
