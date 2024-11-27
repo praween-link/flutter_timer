@@ -34,7 +34,11 @@ A versatile and developer-friendly Flutter package for creating and managing tim
 
 `TimerFController controller = TimerFController();`
 
-* `controller.restart()`
+* `controller.reset()`
+
+* `controller.pause()`
+
+* `controller.resume()`
 
 * `controller.clear()`
 

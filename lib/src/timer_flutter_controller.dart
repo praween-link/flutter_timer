@@ -2,7 +2,15 @@ import 'dart:async';
 
 import 'extensions/imports.dart';
 
-enum AppTimerStatus { notStartedYet, started, ended, reset, clear }
+enum AppTimerStatus {
+  notStartedYet,
+  started,
+  ended,
+  reset,
+  clear,
+  pause,
+  start
+}
 
 class TimerFController {
   /// [duration] it's duration of your timer
@@ -53,13 +61,15 @@ class TimerFController {
   bool _isTimerEnd = false;
 
   StreamController<String> _controller = StreamController<String>.broadcast();
+  late Timer timer;
 
   /// --Access by controller--
   // --get stream controller
-  get controller => _controller;
+  StreamController<String> get controller => _controller;
 
-  // --this function reset the timer
-  restart() {
+  /// --this function reset the timer
+  void reset() {
+    timer.cancel();
     _isTimerStarted = true;
     _isTimerEnd = false;
     startTime = DateTime.now().add(listeningDelay ?? defaultDelay);
@@ -71,8 +81,9 @@ class TimerFController {
     }
   }
 
-  // --this function reset the timer
-  clear() {
+  /// --this function clear the current runing timer
+  void clear() {
+    timer.cancel();
     _isTimerEnd = true;
     Duration delay = listeningDelay ?? defaultDelay;
     _updateFormatedTimeString(0, delay, isCountdown);
@@ -87,9 +98,33 @@ class TimerFController {
     }
   }
 
+  /// --[pause] Pauses the visible progression of the timer while maintaining its internal state.
+  /// --The timer continues to track its remaining duration internally, even while paused.
+  void pause() {
+    timer.cancel();
+
+    /// listener `statusListener`
+    if (statusListener != null) {
+      statusListener!(AppTimerStatus.pause);
+    }
+  }
+
+  /// Resumes the timer from a paused state and restarts its visible progression.
+  /// The timer continues from where it was paused, ensuring seamless continuation
+  /// of its countdown or progression.
+  void resume() {
+    _startAddingNumbers();
+
+    /// listener `statusListener`
+    if (statusListener != null) {
+      statusListener!(AppTimerStatus.start);
+    }
+  }
+
   // dispose
-  dispose() {
+  void dispose() {
     _controller.close();
+    timer.cancel();
   }
 
   // ------------------------------------
@@ -103,7 +138,7 @@ class TimerFController {
     if (statusListener != null) {
       statusListener!(AppTimerStatus.notStartedYet);
     }
-    Timer.periodic(delay, (Timer timer) async {
+    timer = Timer.periodic(delay, (Timer timer) async {
       if (_isTimerEnd) {
         timer.cancel();
       }
@@ -144,7 +179,7 @@ class TimerFController {
     });
   }
 
-  _progress0to1ListenerUpdate(
+  void _progress0to1ListenerUpdate(
       DateTime end, DateTime startedTime, int milisec, bool runing) {
     if (progress0to1Listener != null && runing) {
       double per =
@@ -162,7 +197,7 @@ class TimerFController {
     }
   }
 
-  _updateFormatedTimeString(int milisec, delay, bool isCountdown) {
+  void _updateFormatedTimeString(int milisec, delay, bool isCountdown) {
     if (_isTimerStarted && !_isTimerEnd) {
       _controller.sink.add(milisec.tFormate(timeFormate, delay));
 
