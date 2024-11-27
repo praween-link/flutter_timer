@@ -7,13 +7,13 @@ A versatile and developer-friendly Flutter package for creating and managing tim
     <table>
         <tr>
             <td style="text-align: center">
-                <img src="https://github.com/praween-link/flutter_timer/blob/main/assets/timer_with_pie.gif" width="200"/>
+                <img src="https://raw.githubusercontent.com/praween-link/flutter_timer/refs/heads/main/assets/timer_with_pie.gif" width="200"/>
             </td>            
             <td style="text-align: center">
-                <img src="https://github.com/praween-link/flutter_timer/blob/main/assets/timer_with_progress.gif" width="200"/>
+                <img src="https://raw.githubusercontent.com/praween-link/flutter_timer/refs/heads/main/assets/timer_with_progress.gif" width="200"/>
             </td>
             <td style="text-align: center">
-                <img src="https://github.com/praween-link/flutter_timer/blob/main/assets/timer_with_text.gif" width="200" />
+                <img src="https://raw.githubusercontent.com/praween-link/flutter_timer/refs/heads/main/assets/timer_with_text.gif" width="200" />
             </td>
         </tr>
     </table>
